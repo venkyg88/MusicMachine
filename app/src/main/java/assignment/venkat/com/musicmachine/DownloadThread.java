@@ -11,7 +11,9 @@ public class DownloadThread extends Thread {
     public static final String TAG = DownloadThread.class.getSimpleName();
     @Override
     public void run() {
-        downloadSong();
+        for (String song : Playlist.songs) {
+            downloadSong();
+        }
     }
 
     private void downloadSong() {
