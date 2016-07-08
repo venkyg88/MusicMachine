@@ -1,5 +1,6 @@
 package assignment.venkat.com.musicmachine;
 
+import android.os.Looper;
 import android.util.Log;
 
 /**
@@ -9,24 +10,13 @@ import android.util.Log;
 public class DownloadThread extends Thread {
 
     public static final String TAG = DownloadThread.class.getSimpleName();
+
+    public DownloadHandler handler;
     @Override
     public void run() {
-        for (String song : Playlist.songs) {
-            downloadSong();
-        }
-    }
-
-    private void downloadSong() {
-        //pretent to download!!!
-        long endTime = System.currentTimeMillis() + 10 * 1000;
-        while (System.currentTimeMillis() < endTime){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        Log.d(TAG, "Song Downloaded");
+        Looper.prepare();
+        handler = new DownloadHandler();
+        Looper.loop();
     }
 
 }
