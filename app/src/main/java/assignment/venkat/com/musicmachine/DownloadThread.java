@@ -12,6 +12,7 @@ public class DownloadThread extends Thread {
     public static final String TAG = DownloadThread.class.getSimpleName();
 
     public DownloadHandler handler;
+
     @Override
     public void run() {
         Looper.prepare();
