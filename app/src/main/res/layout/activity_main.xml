@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="assignment.venkat.com.musicmachine.MainActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
+
+    <Button
+        android:text="Download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="447dp"
+        android:id="@+id/downloadButton"
+        app:layout_constraintLeft_toLeftOf="@+id/activity_main"
+        android:layout_marginStart="16dp"
+        tools:layout_constraintLeft_creator="0"
+        app:layout_constraintRight_toRightOf="@+id/activity_main"
+        android:layout_marginEnd="16dp"
+        tools:layout_constraintRight_creator="0"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_main"
+        android:layout_marginBottom="16dp"
+        tools:layout_constraintBottom_creator="0"/>
+</android.support.constraint.ConstraintLayout>
