@@ -26,6 +26,7 @@ public class DownloadService extends Service {
         }
 
         mDownloadHandler = downloadThread.handler;
+        mDownloadHandler.setService(this);
     }
 
     @Override
