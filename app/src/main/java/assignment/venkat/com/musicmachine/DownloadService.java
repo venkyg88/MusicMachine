@@ -34,9 +34,10 @@ public class DownloadService extends Service {
         String song = intent.getStringExtra(MainActivity.KEY_SONG);
         Message message = Message.obtain();
         message.obj = song;
+        message.arg1 = startId;
         mDownloadHandler.sendMessage(message);
 
-        return Service.START_FLAG_REDELIVERY;
+        return Service.START_REDELIVER_INTENT;
     }
 
 
