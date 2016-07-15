@@ -49,6 +49,18 @@ public class PlayerService extends Service {
         mMediaPlayer.start();
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        //we need to stop the service when song playing is done!
+        mMediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                stopSelf();
+            }
+        });
+        return Service.START_NOT_STICKY;
+    }
+
     public void pause() {
         mMediaPlayer.pause();
     }
