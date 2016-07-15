@@ -45,7 +45,7 @@ public class ActivityHandler extends Handler {
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 }
-                //set the pause button to play
+                //change the pause button to play
                 mMainActivity.changePlayButtonText("Play");
             }
         }

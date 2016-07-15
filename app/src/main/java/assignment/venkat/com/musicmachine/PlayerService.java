@@ -47,10 +47,7 @@ public class PlayerService extends Service {
         }
     }*/
 
-    //client methods
-    public void play() {
-        mMediaPlayer.start();
-    }
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -69,6 +66,11 @@ public class PlayerService extends Service {
             }
         });
         return Service.START_NOT_STICKY;
+    }
+
+    //client methods
+    public void play() {
+        mMediaPlayer.start();
     }
 
     public void pause() {
