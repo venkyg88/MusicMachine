@@ -11,7 +11,7 @@ import android.util.Log;
 public class DownloadIntentService extends IntentService {
 
     private static final String TAG = DownloadIntentService.class.getSimpleName();
-    
+
     public DownloadIntentService() {
         super("DownloadIntentService");
         setIntentRedelivery(true);
