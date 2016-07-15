@@ -29,7 +29,7 @@ public class PlayerHandler  extends Handler{
                     int isPlaying = mPlayerService.isPlaying() ? 1 : 0;
                     Message message = Message.obtain();
                     message.arg1 = isPlaying;
-                    if( message.arg2 == 1 )
+                    if( msg.arg2 == 1 )
                         message.arg2 = 1;
                     message.replyTo = mPlayerService.mMessenger;
                     try {
