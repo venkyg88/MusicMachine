@@ -41,4 +41,12 @@
         app:layout_constraintBottom_toTopOf="@+id/downloadButton"
         android:layout_marginBottom="40dp"
         tools:layout_constraintBottom_creator="0"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/playButton"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:id="@+id/recyclerView" />
+
 </android.support.constraint.ConstraintLayout>
