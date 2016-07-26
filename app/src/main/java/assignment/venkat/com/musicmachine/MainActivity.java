@@ -9,6 +9,8 @@ import android.os.IBinder;
 import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean mBound = false;
 
     private PlaylistAdapter mAdapter;
+    private ConstraintLayout mConstraintLayout;
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
@@ -106,6 +109,8 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+
+        mConstraintLayout = (ConstraintLayout) findViewById(R.id.activity_main);
     }
 
     private void testIntents() {
@@ -118,7 +123,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         Uri geoLocation = Uri.parse("geo:0,0?q=40.745102, -74.155483(Venkathouse)");
         intent.setData(geoLocation);
-        startActivity(intent);
+        if (intent.resolveActivity(getPackageManager()) == null) {
+            //handle error - when there is no app to handle the implicit intent.
+            Snackbar.make(mConstraintLayout, "Sorry, nothing found to handle this request.", Snackbar.LENGTH_LONG).show();
+        }
+        else {
+            startActivity(intent);
+        }
     }
 
     private void downloadSongs() {
