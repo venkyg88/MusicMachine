@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
         downloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //downloadSongs();
-                testIntents();
+                downloadSongs();
+                //testIntents();
             }
         });
 
