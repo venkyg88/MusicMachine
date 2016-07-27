@@ -86,8 +86,12 @@ public class DetailActivity extends AppCompatActivity {
             if (mSong != null) {
                 Intent customIntent = new Intent(SHARE_SONG);
                 customIntent.putExtra(MainActivity.EXTRA_SONG, mSong);
-                Intent chooser = Intent.createChooser(customIntent, "share song");
-                startActivity(chooser);
+                /*Intent chooser = Intent.createChooser(customIntent, "share song");
+                startActivity(chooser);*/
+
+                //WE could very easily use broadcast intent receiver getting rid of chooser
+                // and sending the intent with sendbroadcast than startActivity
+                sendBroadcast(customIntent);
             }
         }
 

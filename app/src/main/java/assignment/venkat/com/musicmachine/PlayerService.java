@@ -1,6 +1,7 @@
 package assignment.venkat.com.musicmachine;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -9,12 +10,15 @@ import android.os.IBinder;
 import android.os.Messenger;
 import android.support.annotation.Nullable;
 
+import assignment.venkat.com.musicmachine.model.Song;
+
 /**
  * Created by venkatgonuguntala on 7/14/16.
  */
 
 public class PlayerService extends Service {
 
+    private static final int REQUEST_CODE = 99;
     private MediaPlayer mMediaPlayer;
     //IBinder mIBinder = new LocalBinder();
     public Messenger mMessenger = new Messenger(new PlayerHandler(this));
@@ -51,8 +55,24 @@ public class PlayerService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Notification.Builder notificationBuiler = new Notification.Builder(this);
-        notificationBuiler.setSmallIcon(R.mipmap.ic_launcher);
+        String title = "";
+        String artist = "";
+
+        if (intent.getParcelableExtra(MainActivity.EXTRA_SONG) != null) {
+            Song song = intent.getParcelableExtra(MainActivity.EXTRA_SONG);
+            title = song.getTitle();
+            artist = song.getArtist();
+        }
+
+        Intent customIntent = new Intent(this, MainActivity.class);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, REQUEST_CODE, customIntent, 0);
+
+        Notification.Builder notificationBuiler = new Notification.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle(title)
+                .setContentText(artist)
+                .setContentIntent(pendingIntent);
 
         Notification notification = notificationBuiler.build();
         startForeground(11, notification);

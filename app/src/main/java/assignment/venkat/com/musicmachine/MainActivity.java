@@ -1,8 +1,10 @@
 package assignment.venkat.com.musicmachine;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.net.Uri;
 import android.os.IBinder;
@@ -11,6 +13,7 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
     private PlaylistAdapter mAdapter;
     private ConstraintLayout mConstraintLayout;
+
+    private NetworkConnectionReceiver mReceiver = new NetworkConnectionReceiver();
 
     private ServiceConnection mServiceConnection = new ServiceConnection() {
         @Override
@@ -89,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (mBound){
                     Intent intent = new Intent(MainActivity.this, PlayerService.class);
+                    intent.putExtra(EXTRA_SONG, Playlist.songs[0]);
                     startService(intent);
                     Message message = Message.obtain();
                     message.arg1 = 2;
@@ -143,6 +149,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(TAG, "App is in foreground...");
+        IntentFilter filter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(mReceiver, filter);
+
+        IntentFilter customFilter = new IntentFilter(NetworkConnectionReceiver.NOTIFY_NETWORK_CHANGE);
+        LocalBroadcastManager.getInstance(this).registerReceiver(mLocalReceiver, customFilter);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(TAG, "App is in backgound...");
+        unregisterReceiver(mReceiver);
+    }
 
     @Override
     protected void onStart() {
@@ -175,4 +198,17 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    private BroadcastReceiver mLocalReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean isConnected =
+                    intent.getBooleanExtra(NetworkConnectionReceiver.EXTRA_IS_CONNECTED, false);
+            if (isConnected) {
+                Snackbar.make(mConstraintLayout, "Network is connected", Snackbar.LENGTH_LONG).show();
+            } else {
+                Snackbar.make(mConstraintLayout, "Network is disconnected", Snackbar.LENGTH_LONG).show();
+            }
+        }
+    };
 }
